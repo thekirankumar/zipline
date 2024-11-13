@@ -29,6 +29,7 @@ import platform.Foundation.NSError
 import platform.Foundation.NSHTTPURLResponse
 import platform.Foundation.NSMutableURLRequest
 import platform.Foundation.NSURL
+import platform.Foundation.NSURLRequestUseProtocolCachePolicy
 import platform.Foundation.NSURLResponse
 import platform.Foundation.NSURLSession
 import platform.Foundation.addValue
@@ -50,7 +51,11 @@ internal class URLSessionZiplineHttpClient(
       val completionHandler = CompletionHandler(url, continuation)
 
       val task = urlSession.dataTaskWithRequest(
-        request = NSMutableURLRequest(nsUrl).apply {
+        request = NSMutableURLRequest(
+          uRL = nsUrl,
+          cachePolicy = NSURLRequestUseProtocolCachePolicy,
+          timeoutInterval = 60.0,
+        ).apply {
           for ((name, value) in requestHeaders) {
             addValue(value = value, forHTTPHeaderField = name)
           }
