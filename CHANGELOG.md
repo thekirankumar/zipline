@@ -2,7 +2,17 @@
 
 ## Unreleased
 
+Nothing yet!
+
+
+## [1.18.0] - 2024-11-14
+[1.18.0]: https://github.com/cashapp/zipline/releases/tag/1.18.0
+
+ * Fix: Prevent clients from caching the dev server's responses.
  * New: "compile" subcommand in 'zipline-cli' compiles `.js` files to `.zipline` files.
+ * Upgrade: [Kotlin Serialization 1.7.3][kotlin_serialization_1_7_3].
+ * Upgrade: [kotlinx.coroutines 1.9.0][kotlinx_coroutines_1_9_0].
+ * Upgrade: [Okio 3.9.1][okio_3_9_1].
 
 
 ## [1.17.0] - 2024-08-28
@@ -568,12 +578,15 @@ Initial release.
 [kotlin_serialization_1_6_0]: https://github.com/Kotlin/kotlinx.serialization/releases/tag/v1.6.0
 [kotlin_serialization_1_7_0]: https://github.com/Kotlin/kotlinx.serialization/releases/tag/v1.7.0
 [kotlin_serialization_1_7_1]: https://github.com/Kotlin/kotlinx.serialization/releases/tag/v1.7.1
+[kotlin_serialization_1_7_3]: https://github.com/Kotlin/kotlinx.serialization/releases/tag/v1.7.3
 [kotlinx_coroutines_1_7_1]: https://github.com/Kotlin/kotlinx.coroutines/releases/tag/1.7.1
 [kotlinx_coroutines_1_7_2]: https://github.com/Kotlin/kotlinx.coroutines/releases/tag/1.7.2
 [kotlinx_coroutines_1_7_3]: https://github.com/Kotlin/kotlinx.coroutines/releases/tag/1.7.3
 [kotlinx_coroutines_1_8_0]: https://github.com/Kotlin/kotlinx.coroutines/releases/tag/1.8.0
+[kotlinx_coroutines_1_9_0]: https://github.com/Kotlin/kotlinx.coroutines/releases/tag/1.9.0
 [okio_3_7_0]: https://square.github.io/okio/changelog/#version-370
 [okio_3_9_0]: https://square.github.io/okio/changelog/#version-390
+[okio_3_9_1]: https://square.github.io/okio/changelog/#version-391
 [oracle_linux_8]: https://docs.oracle.com/en/operating-systems/oracle-linux/8/
 [sqldelight_2_0_0]: https://cashapp.github.io/sqldelight/2.0.0/changelog/#200-2023-07-26
 [sqldelight_2_0_2]: https://cashapp.github.io/sqldelight/2.0.2/changelog/#202-2024-04-05
