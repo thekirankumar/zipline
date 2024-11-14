@@ -15,6 +15,7 @@
  */
 package app.cash.zipline.gradle
 
+import java.io.File
 import java.util.Timer
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
@@ -23,6 +24,8 @@ import org.gradle.api.file.Directory
 import org.gradle.deployment.internal.Deployment
 import org.gradle.deployment.internal.DeploymentHandle
 import org.http4k.core.ContentType
+import org.http4k.core.Filter
+import org.http4k.core.then
 import org.http4k.routing.ResourceLoader
 import org.http4k.routing.bind
 import org.http4k.routing.routes
@@ -40,10 +43,15 @@ import org.http4k.websocket.WsMessage
  * subscribe to change notifications with a web socket, which will cause this loader to send a
  * 'reload' method whenever the manifest should be checked for an update.
  */
-internal open class ZiplineDevelopmentServer @Inject constructor(
-  private val inputDirectory: Directory,
+internal open class ZiplineDevelopmentServer internal constructor(
+  private val inputDirectory: File,
   private val port: Int,
 ) : DeploymentHandle {
+  @Inject constructor(
+    inputDirectory: Directory,
+    port: Int,
+  ) : this(inputDirectory.asFile, port)
+
   private val websockets = CopyOnWriteArrayList<Websocket>()
   private var timer: Timer? = null
   private var server: Http4kServer? = null
@@ -60,10 +68,19 @@ internal open class ZiplineDevelopmentServer @Inject constructor(
       },
     )
 
-    val http = routes(
-      "/" bind static(
-        ResourceLoader.Directory(inputDirectory.asFile.absolutePath),
-        Pair("zipline", ContentType.TEXT_PLAIN),
+    // Note that 'no-cache' is different from 'no-store', and it permits conditional requests.
+    val noCacheFilter = Filter { next ->
+      { request ->
+        next(request).header("Cache-Control", "no-cache")
+      }
+    }
+
+    val http = noCacheFilter.then(
+      routes(
+        "/" bind static(
+          ResourceLoader.Directory(inputDirectory.absolutePath),
+          Pair("zipline", ContentType.TEXT_PLAIN),
+        ),
       ),
     )
 
